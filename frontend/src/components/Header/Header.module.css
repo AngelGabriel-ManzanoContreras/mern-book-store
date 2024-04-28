@@ -1,0 +1,9 @@
+.Header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--box-padding);
+  background-color: cadetblue;
+  color: var(--color-primary-white)
+}

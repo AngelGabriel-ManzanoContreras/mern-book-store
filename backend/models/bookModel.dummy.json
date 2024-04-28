@@ -1,0 +1,12 @@
+{
+  "title": "Dummy Book",
+  "author": "John Doe",
+  "published_date": "2021-01-01",
+  "pages": 200,
+  "language": "English",
+  "isbn": "1234567890",
+  "publisher": "Dummy Publisher",
+  "edition": 1,
+  "category": "Fiction",
+  "description": "This is a dummy book for testing purposes."
+}

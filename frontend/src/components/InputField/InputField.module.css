@@ -1,0 +1,25 @@
+.InputField {
+  display: flex;
+  flex-direction: column;
+}
+
+.InputField--label {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.InputField--input {
+  min-width: 25rem;
+  max-width: 100%;
+  padding: var(--box-padding);
+  font-size: 1rem;
+  border: 1px solid var(--color-primary-white);
+  border-radius: 5px;
+  transition: border-color 0.25s;
+}
+
+.InputField--input:focus,
+.InputField--input:hover {
+  border-color: var(--color-secondary-purple);
+}
