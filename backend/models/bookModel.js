@@ -41,10 +41,10 @@ const bookSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // imagePath: {
-  //   type: String, // Store the relative path to the image
-  //   required: true,
-  // }
+  imagePath: {
+    type: String, // Store the relative path to the image
+    required: true,
+  }
 }, {
   timestamps: true,
 })

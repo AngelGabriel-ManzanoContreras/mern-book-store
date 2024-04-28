@@ -1,14 +1,10 @@
-import React from 'react';
+import useCreateBookLogic from './AddBook.logic.ts';
 
-import { BookInput } from '../utils/models/book.ts';
-import useFormData from '../hooks/useFormData.ts';
-import { saveBook } from '../api/book.ts';
+import InputField from '../../components/InputField/InputField.tsx';
+import Layout from '../../components/Layout/Layout.tsx';
 
-import InputField from '../components/InputField/InputField.tsx';
-import Layout from '../components/Layout/Layout.tsx';
-
-export default function CreateBookPage() {
-  const [ newBook, setBook ] = useFormData( BookInput );
+export default function AddBookPage() {
+  const { newBook, onInputChange, onFileChange, handleSubmit } = useCreateBookLogic();
 
   const { 
     title , 
@@ -20,32 +16,9 @@ export default function CreateBookPage() {
     publisher, 
     edition, 
     category, 
-    description 
+    description,
+    image
   } = newBook;
-
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setBook(name, value);
-  }
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    const formatedBookData = Object.keys( newBook ).reduce( ( acc : any, key : any ) => {
-      acc[ key ] = newBook[ key ].value;
-      return acc;
-    }, {} );
-    
-    const res = await saveBook( formatedBookData );
-
-    console.log( res );
-
-    if ( res && res.data ) {
-      console.log( res.data );
-    } else {
-      console.log( 'Failed to save book' );
-    }
-  };
 
   return (
     <Layout>
@@ -142,6 +115,16 @@ export default function CreateBookPage() {
           required
           onChange={ onInputChange }
         />
+
+        <input type="file" name="image" accept='image/*' required onChange={ onFileChange } />
+        {
+          image.imageName && <span>{ image.imageName }</span>
+        
+        }
+
+        {
+          image.value && <img src={ image.value } alt={ title?.value } width='200' />
+        }
         
         <button type="submit">Submit</button>
       </form>

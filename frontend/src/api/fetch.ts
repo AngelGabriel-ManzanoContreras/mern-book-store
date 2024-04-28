@@ -20,7 +20,10 @@ export default async function fetchData( url: string, method: string, data: any 
       data: await response.json()
     }
   } catch ( error ) {
-    console.error( error )
+    console.error(`
+      Error fetching data: 
+      ${ error }
+    `)
     return null
   }
 }

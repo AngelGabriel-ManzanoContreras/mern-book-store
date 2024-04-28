@@ -9,7 +9,7 @@ export type Book = {
   edition         : number;
   category        : string;
   description     : string;
-  // image           : string;
+  image           : string;
 }
 
 export const BookInput : Book = {
@@ -23,5 +23,5 @@ export const BookInput : Book = {
   edition         : 0,
   category        : '',
   description     : '',
-  // image           : '',
+  image           : '',
 }

@@ -28,6 +28,8 @@ export const formatBook = ( body ) => {
     publisher: body.publisher,
     edition: body.edition,
     description: body.description,
-    category: body.category
+    category: body.category,
+    image : body.image
   };
 }
+

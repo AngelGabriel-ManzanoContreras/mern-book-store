@@ -1,21 +1,18 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import { getBooks } from '../api/books.ts';
 
-export default function MainPage() {
+import Layout from '../components/Layout/Layout.tsx';
+
+export default function Home() {
   const [ books, setBooks ] = useState([]);
   const [ message, setMessage ] = useState('');
+  const [ loading, setLoading ] = useState(false);
 
   return (
-    <>
-
-      <Link to="/books">Books</Link>
-      <Link to="/books/create">Create Book</Link>
-      <Link to="/books/1">View Book</Link>
-      <Link to="/books/1/edit">Edit Book</Link>
-
+    <Layout>
       <button onClick={async () => {
+        setLoading( true );
         const res = await getBooks();
 
         if ( res && res.data ) {
@@ -24,10 +21,11 @@ export default function MainPage() {
           setMessage( 'Failed to get books' );
         }
 
+        setLoading( false );
       } }>Get Books</button>
 
       {
-        message && <p>{ message }</p>
+        ( message && !(loading) ) && <p>{ message }</p>
       }
 
       {
@@ -41,6 +39,6 @@ export default function MainPage() {
           </ul>
         )
       }
-    </>
+    </Layout>
   )
 }

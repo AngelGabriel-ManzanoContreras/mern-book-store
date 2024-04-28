@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express from "express";
+import bodyParser from 'body-parser';
 import mongoose from "mongoose";
 import cors from "cors";
 
@@ -16,6 +17,16 @@ const mongoDBURL = `${ mongoDBURL_1 }${ pass }${ mongoDBURL_2 }`;
 
 const app = express();
 
+app.use(bodyParser.json({limit: '35mb'}));
+
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+    limit: '35mb',
+    parameterLimit: 50000,
+  }),
+);
+
 app.use(express.json());
 app.use(cors(
   {
@@ -24,12 +35,21 @@ app.use(cors(
     allowedHeaders: [ "Content-Type" ]
   }
 ));
+
 app.use("/book", bookRouter);
 app.use("/books", booksRouter);
 
 const startServer = async () => {
   app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+    try {
+      console.log(`Server listening on port ${PORT}`);
+    } catch (error) {
+      console.log(`
+      Error starting server
+
+      ${error}
+      `);
+    }
   });
 }
 
