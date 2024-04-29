@@ -39,6 +39,20 @@ export default function Home() {
           </ul>
         )
       }
+      {
+        books.length > 0 && (
+          <ul>
+            {
+              books.map( ( book: any, key: number ) => (
+                <img key={ key } width={200} src={ book.image } alt={ book.title } />
+              ))
+            }
+          </ul>
+        )
+      }
+      {
+        loading && <p>Loading...</p>
+      }
     </Layout>
   )
 }

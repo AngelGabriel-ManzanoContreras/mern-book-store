@@ -1,13 +1,21 @@
 import express from "express";
 import dotenv from "dotenv";
-import fs from "fs";
 import path from "path";
+
+import { Book } from "../models/bookModel.js";
+import { 
+  validateBook, 
+  formatBook, 
+  endpointCalled, 
+  saveBookImage,
+  getBookImage,
+  deleteBookImage, 
+  deleteBookDirectory
+} from "../shared/index.js";
 
 const bookRouter = express.Router();
 dotenv.config();
 
-import { Book } from "../models/bookModel.js";
-import { validateBook, formatBook, createDirectoryIfNotExists, endpointCalled } from "../shared/index.js";
 const UPLOADS_DIR = process.env.UPLOADS_DIR;
 const BOOK_COVERS_DIR = `${ UPLOADS_DIR }/books/`;
 
@@ -15,7 +23,6 @@ bookRouter.post("/", async (req, res) => {
   endpointCalled("/books POST");
 
   try {
-
     if (!validateBook( req.body )) {
       res.status(400).send({ created: false, error: "Invalid book data", data: null });
       return;
@@ -23,29 +30,8 @@ bookRouter.post("/", async (req, res) => {
 
     const newBook = formatBook(req.body);
 
-    // Create a directory for the book if it doesn't exist
-    const bookDir = path.join(BOOK_COVERS_DIR, newBook.title.replace(/\s/g, '_')); // Replace spaces in title with underscores
-    createDirectoryIfNotExists(bookDir);
-
-    console.log('bookDir', bookDir)
-
-    const matches = req.body.image.match(/^data:image\/([A-Za-z-+\/]+);base64,(.+)$/);
-    if (!matches || matches.length !== 3) {
-      throw new Error("Invalid image data");
-    }
-
-    const imageExtension = matches[1].split('/')[0];
-    const imageData = Buffer.from(matches[2], 'base64');
-
-    // Save the image file to the book's directory with the correct extension
-    const imageFileName = `${Date.now()}-${req.body.title.replace(/\s/g, '_')}.${imageExtension}`;
-    const imagePath = path.join(bookDir, imageFileName);
-    fs.writeFileSync(imagePath, imageData);
-
-    console.log('imagePath', imagePath)
-
     // Save the relative path to the image in the database
-    newBook.imagePath = path.relative(BOOK_COVERS_DIR, imagePath);
+    newBook.imagePath = await saveBookImage( newBook.image, newBook.title );
 
     const book = await Book.create( newBook );
 
@@ -72,7 +58,14 @@ bookRouter.get("/:id", async (req, res) => {
       return res.status(404).send({ error: "Book not found", data: null });
     }
 
-    return res.status(200).send({ error: null, data: book });
+    const { serializedImage } = await getBookImage( book.imagePath );
+
+    const bookWithImage = {
+      ...book.toObject(),
+      image: serializedImage,
+    };
+
+    return res.status(200).send({ error: null, data: bookWithImage });
 
   } catch (error) {
     console.log(`
@@ -126,11 +119,22 @@ bookRouter.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
 
-    const result = await Book.findByIdAndDelete( id );
+    const book = await Book.findById(id);
+    
+    if (!book) {
+      return res.status(404).send({ deleted: false, error: "Book not found", data: null });
+    }
+    const result = await Book.findByIdAndDelete(id);
     
     if (!result) {
       return res.status(404).send({ deleted: false, error: "Book not found", data: null });
     }
+
+    const imagePath = path.join(BOOK_COVERS_DIR, book.imagePath);
+    deleteBookImage(imagePath);
+
+    const bookDir = path.join(BOOK_COVERS_DIR, book.title.replace(/\s/g, '_'));
+    deleteBookDirectory(bookDir);
 
     return res.status(200).send({ deleted: true, error: null, data: result });
 
