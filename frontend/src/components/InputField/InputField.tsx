@@ -1,6 +1,4 @@
-import React from 'react'
-
-import { InputFieldProps } from './InputField-Interface'
+import { InputFieldProps } from './InputField.Interface'
 
 import styles from './InputField.module.css'
 
