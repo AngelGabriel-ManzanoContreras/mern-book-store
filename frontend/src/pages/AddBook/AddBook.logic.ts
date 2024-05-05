@@ -12,7 +12,7 @@ export default function useCreateBookLogic () {
   }
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
+    const { files } = e.target;
     const file = files[0];
     const typeValidation = isValidImage( file );
 
@@ -32,7 +32,7 @@ export default function useCreateBookLogic () {
 
     const buffer = new FileReader();
     buffer.readAsDataURL( file );
-    buffer.onload = (e: ProgressEvent<FileReader>) => {
+    buffer.onload = () => {
       const base64 = buffer.result as string;
       console.log( file.name );
       console.log( newBook.image );

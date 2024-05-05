@@ -1,7 +1,9 @@
 import useCreateBookLogic from './AddBook.logic.ts';
 
-import InputField from '../../components/InputField/InputField.tsx';
+import styles from './AddBook.module.css';
 import Layout from '../../components/Layout/Layout.tsx';
+import InputField from '../../components/InputField/InputField.tsx';
+import InputFile from '../../components/InputFile/InputFile.tsx';
 
 export default function AddBookPage() {
   const { newBook, onInputChange, onFileChange, handleSubmit } = useCreateBookLogic();
@@ -24,7 +26,10 @@ export default function AddBookPage() {
     <Layout>
       <h1>Create Book</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form 
+        className={ styles[`add-book__form`] }
+        onSubmit={handleSubmit}
+      >
 
         <InputField
           type="text"
@@ -45,7 +50,52 @@ export default function AddBookPage() {
         />
         
         <InputField
-          type="date"
+          type="text"
+          name="category"
+          label='Category'
+          value={ category.value }
+          required
+          onChange={ onInputChange }
+        />
+
+        <InputField
+          type="number"
+          name="edition"
+          label='Edition'
+          value={ edition.value }
+          required
+          onChange={ onInputChange }
+        />
+
+        <InputField
+          type="text"
+          name="language"
+          label='Language'
+          value={ language.value }
+          required
+          onChange={ onInputChange }
+        />
+        
+        <InputField
+          type="text"
+          name="publisher"
+          label='Publisher'
+          value={ publisher.value }
+          required
+          onChange={ onInputChange }
+        />
+
+        <InputField
+          type="text"
+          name="isbn"
+          label='ISBN'
+          value={ isbn.value }
+          required
+          onChange={ onInputChange }
+        />
+        
+        <InputField
+          type="month"
           name="published_date"
           label='Published Date'
           value={ published_date.value }
@@ -64,51 +114,6 @@ export default function AddBookPage() {
         
         <InputField
           type="text"
-          name="language"
-          label='Language'
-          value={ language.value }
-          required
-          onChange={ onInputChange }
-        />
-        
-        <InputField
-          type="text"
-          name="isbn"
-          label='ISBN'
-          value={ isbn.value }
-          required
-          onChange={ onInputChange }
-        />
-        
-        <InputField
-          type="text"
-          name="publisher"
-          label='Publisher'
-          value={ publisher.value }
-          required
-          onChange={ onInputChange }
-        />
-        
-        <InputField
-          type="number"
-          name="edition"
-          label='Edition'
-          value={ edition.value }
-          required
-          onChange={ onInputChange }
-        />
-        
-        <InputField
-          type="text"
-          name="category"
-          label='Category'
-          value={ category.value }
-          required
-          onChange={ onInputChange }
-        />
-        
-        <InputField
-          type="text"
           name="description"
           label='Description'
           value={ description.value }
@@ -116,7 +121,13 @@ export default function AddBookPage() {
           onChange={ onInputChange }
         />
 
-        <input type="file" name="image" accept='image/*' required onChange={ onFileChange } />
+        <InputFile 
+          name="image"
+          accept='image/*'
+          required
+          onChange={onFileChange}
+          label={''}
+        />
         {
           image.imageName && <span>{ image.imageName }</span>
         

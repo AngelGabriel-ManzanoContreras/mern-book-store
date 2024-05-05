@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { getBooks } from '../api/books.ts';
 
 import Layout from '../components/Layout/Layout.tsx';
+import BookCard from '../components/BookCard/BookCard.tsx';
 
 export default function Home() {
   const [ books, setBooks ] = useState([]);
@@ -30,24 +32,9 @@ export default function Home() {
 
       {
         books.length > 0 && (
-          <ul>
-            {
-              books.map( ( book: any, key: number ) => (
-                <li key={ key }>{ book.title }</li>
-              ))
-            }
-          </ul>
-        )
-      }
-      {
-        books.length > 0 && (
-          <ul>
-            {
-              books.map( ( book: any, key: number ) => (
-                <img key={ key } width={200} src={ book.image } alt={ book.title } />
-              ))
-            }
-          </ul>
+          books.map( ( book: any, key: number ) => (
+            <BookCard key={ key } book={ book } />
+          ))
         )
       }
       {

@@ -24,7 +24,7 @@ bookRouter.post("/", async (req, res) => {
 
   try {
     if (!validateBook( req.body )) {
-      res.status(400).send({ created: false, error: "Invalid book data", data: null });
+      res.status(400).send({ created: false, error: "Invalid book data", book: undefined });
       return;
     }
 
@@ -35,7 +35,7 @@ bookRouter.post("/", async (req, res) => {
 
     const book = await Book.create( newBook );
 
-    return res.status(201).send({ created: true, error: null, data: book });
+    return res.status(201).send({ created: true, error: null, book: book });
 
   } catch (error) {
     console.log(`
@@ -43,7 +43,7 @@ bookRouter.post("/", async (req, res) => {
 
     ${error}
     `);
-    res.status(500).send({ error: "Error creating book", data: null });
+    res.status(500).send({ error: "Error creating book", book: undefined });
   }
 });
 
@@ -55,7 +55,7 @@ bookRouter.get("/:id", async (req, res) => {
     const book = await Book.findById( id );
 
     if (!book) {
-      return res.status(404).send({ error: "Book not found", data: null });
+      return res.status(404).send({ error: "Book not found", book: undefined });
     }
 
     const { serializedImage } = await getBookImage( book.imagePath );
@@ -65,7 +65,7 @@ bookRouter.get("/:id", async (req, res) => {
       image: serializedImage,
     };
 
-    return res.status(200).send({ error: null, data: bookWithImage });
+    return res.status(200).send({ error: null, book: bookWithImage });
 
   } catch (error) {
     console.log(`
@@ -73,7 +73,7 @@ bookRouter.get("/:id", async (req, res) => {
 
     ${error}
     `);
-    res.status(500).send({ error: "Error getting book", data: null });
+    res.status(500).send({ error: "Error getting book", book: undefined });
   }
 });
 

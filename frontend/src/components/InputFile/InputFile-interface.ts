@@ -1,8 +1,7 @@
-export interface InputFieldProps {
-  type      : string;
+export interface InputFileProps {
   name      : string;
   label?    : string;
-  value?    : string | number;
+  accept    : string;
   required? : boolean;
   onChange  : (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

@@ -1,4 +1,5 @@
 export type Book = {
+  _id             : string;
   title           : string;
   author          : string;
   published_date  : string;
@@ -13,6 +14,7 @@ export type Book = {
 }
 
 export const BookInput : Book = {
+  _id             : '',
   title           : '',
   author          : '',
   published_date  : '',
