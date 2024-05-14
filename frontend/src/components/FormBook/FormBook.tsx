@@ -4,8 +4,9 @@ import { FormBookProps } from './FormBook.interface.ts';
 import InputField from '../../components/InputField/InputField.tsx';
 import { Book } from '../../utils/models/book.ts';
 
-export default function FormBook({ onSubmit } : FormBookProps) {
-  const { newBook, onInputChange, onFileChange } = useFormBookLogic();
+export default function FormBook({ initialBook, required = false, onSubmit } : FormBookProps) {
+  const { newBook, onInputChange, onFileChange } = useFormBookLogic( initialBook );
+
   const { 
     title, 
     author, 
@@ -32,7 +33,7 @@ export default function FormBook({ onSubmit } : FormBookProps) {
         name="title"
         label='Title'
         value={ title.value }
-        required
+        required={ required }
         onChange={ onInputChange }
       />
 
@@ -41,7 +42,7 @@ export default function FormBook({ onSubmit } : FormBookProps) {
         name="author"
         label='Author'
         value={ author.value }
-        required
+        required={ required }
         onChange={ onInputChange }
       />
       
@@ -50,7 +51,7 @@ export default function FormBook({ onSubmit } : FormBookProps) {
         name="published_date"
         label='Published Date'
         value={ published_date.value }
-        required
+        required={ required }
         onChange={ onInputChange }
       />
       
@@ -59,7 +60,7 @@ export default function FormBook({ onSubmit } : FormBookProps) {
         name="pages"
         label='Pages'
         value={ pages.value }
-        required
+        required={ required }
         onChange={ onInputChange }
       />
       
@@ -77,7 +78,7 @@ export default function FormBook({ onSubmit } : FormBookProps) {
         name="isbn"
         label='ISBN'
         value={ isbn.value }
-        required
+        required={ required }
         onChange={ onInputChange }
       />
       
@@ -86,7 +87,7 @@ export default function FormBook({ onSubmit } : FormBookProps) {
         name="publisher"
         label='Publisher'
         value={ publisher.value }
-        required
+        required={ required }
         onChange={ onInputChange }
       />
       
@@ -95,7 +96,7 @@ export default function FormBook({ onSubmit } : FormBookProps) {
         name="edition"
         label='Edition'
         value={ edition.value }
-        required
+        required={ required }
         onChange={ onInputChange }
       />
       
@@ -104,7 +105,7 @@ export default function FormBook({ onSubmit } : FormBookProps) {
         name="category"
         label='Category'
         value={ category.value }
-        required
+        required={ required }
         onChange={ onInputChange }
       />
       
@@ -113,11 +114,11 @@ export default function FormBook({ onSubmit } : FormBookProps) {
         name="description"
         label='Description'
         value={ description.value }
-        required
+        required={ required }
         onChange={ onInputChange }
       />
 
-      <input type="file" name="image" accept='image/*' required onChange={ onFileChange } />
+      <input type="file" name="image" accept='image/*' required={ required } onChange={ onFileChange } />
       {
         image.imageName && <span>{ image.imageName }</span>
       

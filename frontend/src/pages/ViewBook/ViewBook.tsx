@@ -1,17 +1,16 @@
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import useViewBookLogic from './ViewBook.logic'
 
 import styles from './ViewBook.module.css'
 import Layout from '../../components/Layout/Layout'
+import { formatDate } from '../../utils'
 
 export default function ViewBook() {
   const { id = '' } = useParams()
   const { book, loading, message } = useViewBookLogic( id )
 
-  const formatedDate = new Date( book.published_date ).toLocaleDateString( 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-
-  console.log( 'book', book )
+  const formatedDate = ( book.published_date ) ? formatDate( book.published_date ) : ''
   
   return (
     <Layout>
@@ -54,6 +53,8 @@ export default function ViewBook() {
       {
         message && <p>{ message }</p>
       }
+
+      <Link to={`/book/edit/${ id }`}>Edit</Link>
     </Layout>
   )
 }

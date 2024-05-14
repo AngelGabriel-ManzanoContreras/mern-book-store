@@ -1,17 +1,17 @@
 import useFormData from '../../hooks/useFormData.ts';
-
 import { BookInput } from '../../utils/models/book.ts';
+
 import { isValidImage, isValidSize } from '../../utils/index.ts';
 
 const DEFAULT_INCORRECT_IMAGE_SIZE = 'Invalid image size. Please select an image that is less than 5MB.';
 const DEFAULT_INCORRECT_IMAGE_TYPE = 'Invalid image type. Please select a JPEG or PNG image.';
 
-export default function useFormBookLogic () {
-  const [ newBook, setBook ] = useFormData( BookInput );
+export default function useFormBookLogic ( initialBook = BookInput ) {
+  const [ newBook, setBookAttribute ] = useFormData( initialBook );
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setBook(name, value);
+    setBookAttribute(name, value);
   }
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +36,7 @@ export default function useFormBookLogic () {
     buffer.readAsDataURL( file );
     buffer.onload = () => {
       const base64 = buffer.result as string;
-      setBook( 'image', base64, { imageName : file.name });
+      setBookAttribute( 'image', base64, { imageName : file.name });
     }
   }
 

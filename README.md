@@ -11,3 +11,7 @@ MERN Stack
 - [react](https://react.dev/)
 - [node.js](https://nodejs.org/en)
 - [nodemon](https://www.npmjs.com/package/nodemon)
+
+### Repo notes
+
+I'm uploading the image files to the repo because the code breaks if doesn't find the corresponding images when getting them...

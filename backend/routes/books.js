@@ -19,6 +19,7 @@ booksRouter.get("/", async (req, res) => {
     const modifiedBooks = [];
     
     for (let book of books) {
+      
       if ( !( book.imagePath ) ) continue; // Skip books without an image path
 
       const relativeImagePath = book.imagePath.replace(/\\/g, "/");

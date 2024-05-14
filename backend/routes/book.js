@@ -20,7 +20,7 @@ const UPLOADS_DIR = process.env.UPLOADS_DIR;
 const BOOK_COVERS_DIR = `${ UPLOADS_DIR }/books/`;
 
 bookRouter.post("/", async (req, res) => {
-  endpointCalled("/books POST");
+  endpointCalled("/book POST");
 
   try {
     if (!validateBook( req.body )) {
@@ -48,7 +48,7 @@ bookRouter.post("/", async (req, res) => {
 });
 
 bookRouter.get("/:id", async (req, res) => {
-  endpointCalled("/books/:id GET");
+  endpointCalled("/book/:id GET");
 
   try {
     const { id } = req.params;
@@ -78,27 +78,31 @@ bookRouter.get("/:id", async (req, res) => {
 });
 
 bookRouter.put("/:id", async (req, res) => {
-  endpointCalled("/books/:id PUT");
+  endpointCalled("/book/:id PUT");
 
   try {
     const { id } = req.params;
     const book = await Book.findById( id );
-
-    if (!book) {
-      return res.status(404).send({ error: "Book not found", data: null });
-    }
 
     if (!validateBook(req.body)) {
       res.status(400).send({ error: "Invalid book data", data: null });
       return;
     }
 
+    if (!book) {
+      return res.status(404).send({ error: "Book not found", data: null });
+    }
+
+    deleteBookImage( path.join(BOOK_COVERS_DIR, book.imagePath) );
+
     const updatedBook = formatBook(req.body);
+
+    updatedBook.imagePath = await saveBookImage( updatedBook.image, updatedBook.title );
 
     const updated = await Book.findByIdAndUpdate( id, updatedBook );
 
     if (!updated) {
-      return res.status(404).send({ updated: false, error: "Book not found", data: null });
+      return res.status(404).send({ updated: false, error: "something went wrong", data: null });
     }
 
     return res.status(200).send({ updated: true, error: null, data: updated });
@@ -114,7 +118,7 @@ bookRouter.put("/:id", async (req, res) => {
 });
 
 bookRouter.delete("/:id", async (req, res) => {
-  endpointCalled("/books/:id DELETE");
+  endpointCalled("/book/:id DELETE");
   
   try {
     const { id } = req.params;

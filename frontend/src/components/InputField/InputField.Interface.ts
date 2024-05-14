@@ -4,5 +4,6 @@ export interface InputFieldProps {
   label?    : string;
   value?    : string | number;
   required? : boolean;
+  accept?   : string;
   onChange  : (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

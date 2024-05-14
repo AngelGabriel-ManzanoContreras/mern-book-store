@@ -10,17 +10,23 @@
 }
 
 .view-book__presentation {
+  max-width: 50dvw;
   order: 2;
   grid-column: 2;
 }
 
 .view-book__title {
-  font-size: 2.5rem;
+  max-width: 100%;
+  font-size: 1.25em;
   font-weight: bold;
+
+  white-space: wrap;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 
 .view-book__author {
-  font-size: 1.5rem;
+  font-size: 1em;
   font-weight: bold;
 }
 
@@ -46,7 +52,7 @@
 }
 
 .view-book__description p {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .view-book__image {
@@ -60,8 +66,9 @@
 }
 
 .view-book__image img {
-  width: 80%;
+  width: 90%;
   height: auto;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 768px) {
@@ -71,6 +78,7 @@
   }
 
   .view-book__presentation {
+    max-width: 80dvw !important;
     order: 1;
     grid-column: 1;
     grid-row: 1;
@@ -86,6 +94,7 @@
   }
 
   .view-book__image {
+    max-width: 90dvw;
     grid-row: 2;
     grid-column: 1;
 

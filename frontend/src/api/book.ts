@@ -8,3 +8,7 @@ export const saveBook = async ( book: Book ) => {
 export const getBook = async ( id: string ) => {
   return await fetchData( `/book/${ id }`, 'GET' );
 }
+
+export const updateBook = async ( book: Book ) => {
+  return await fetchData( `/book/${ book._id }`, 'PUT', book );
+}

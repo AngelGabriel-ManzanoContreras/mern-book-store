@@ -2,7 +2,7 @@ import { InputFieldProps } from './InputField.Interface'
 
 import styles from './InputField.module.css'
 
-export default function InputField({ type, name, label, value, required, onChange }: InputFieldProps) {
+export default function InputField({ type, name, label, value, required, accept, onChange }: InputFieldProps) {
   return (
     <section className={ styles[`input-field`] }>
       <label className={ styles[`input-field--label`] } htmlFor={name}>{ label || name }</label>
@@ -12,6 +12,7 @@ export default function InputField({ type, name, label, value, required, onChang
         type={type}
         name={name}
         value={value}
+        accept={ accept }
         onChange={onChange}
       />
     </section>
