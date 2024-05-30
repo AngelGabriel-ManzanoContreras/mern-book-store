@@ -8,6 +8,11 @@ const UPLOADS = process.env.UPLOADS_DIR;
 const BOOK_COVERS_DIR = `${ UPLOADS }/books/`;
 const readFile = promisify(fs.readFile);
 
+// Función para remover caracteres no válidos de una cadena de texto
+const sanitizeString = (str) => {
+  return str.replace(/[\\/:*?"<>|]/g, '_'); // Reemplaza los caracteres no válidos con un guion bajo
+};
+
 export const createDirectory = (dir) => {
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });
@@ -24,12 +29,14 @@ export async function saveBookImage( image, bookTitle ) {
     const imageExtension = matches[1].split('/')[0];
     const imageData = Buffer.from(matches[2], 'base64');
 
+    const sanitizedTitle = sanitizeString(bookTitle).replace(/\s/g, '_');
+
     // Replace spaces in title with underscores
-    const bookDir = path.join(BOOK_COVERS_DIR, bookTitle.replace(/\s/g, '_'));
+    const bookDir = path.join(BOOK_COVERS_DIR, sanitizedTitle);
     createDirectory(bookDir);
 
     // Save the image file to the book's directory with the correct extension
-    const imageFileName = `${Date.now()}-${bookTitle.replace(/\s/g, '_')}.${imageExtension}`;
+    const imageFileName = `${Date.now()}-${ sanitizedTitle }.${imageExtension}`;
     const imagePath = path.join(bookDir, imageFileName);
     fs.writeFileSync(imagePath, imageData);
 

@@ -53,6 +53,12 @@
   font-weight: 500;
   line-height: 1.5;
   color: var(--color-secondary-dark);
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .book-card__author {

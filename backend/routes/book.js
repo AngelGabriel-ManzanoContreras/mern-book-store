@@ -13,39 +13,43 @@ import {
   deleteBookDirectory
 } from "../shared/index.js";
 
+import createBook from "./services/createBook.js";
+
 const bookRouter = express.Router();
 dotenv.config();
 
 const UPLOADS_DIR = process.env.UPLOADS_DIR;
 const BOOK_COVERS_DIR = `${ UPLOADS_DIR }/books/`;
 
-bookRouter.post("/", async (req, res) => {
-  endpointCalled("/book POST");
+// bookRouter.post("/", async (req, res) => {
+//   endpointCalled("/book POST");
 
-  try {
-    if (!validateBook( req.body )) {
-      res.status(400).send({ created: false, error: "Invalid book data", book: undefined });
-      return;
-    }
+//   try {
+//     if (!validateBook( req.body )) {
+//       res.status(400).send({ created: false, error: "Invalid book data", book: undefined });
+//       return;
+//     }
 
-    const newBook = formatBook(req.body);
+//     const newBook = formatBook(req.body);
 
-    // Save the relative path to the image in the database
-    newBook.imagePath = await saveBookImage( newBook.image, newBook.title );
+//     // Save the relative path to the image in the database
+//     newBook.imagePath = await saveBookImage( newBook.image, newBook.title );
 
-    const book = await Book.create( newBook );
+//     const book = await Book.create( newBook );
 
-    return res.status(201).send({ created: true, error: null, book: book });
+//     return res.status(201).send({ created: true, error: null, book: book });
 
-  } catch (error) {
-    console.log(`
-    Error creating book
+//   } catch (error) {
+//     console.log(`
+//     Error creating book
 
-    ${error}
-    `);
-    res.status(500).send({ error: "Error creating book", book: undefined });
-  }
-});
+//     ${error}
+//     `);
+//     res.status(500).send({ error: "Error creating book", book: undefined });
+//   }
+// });
+
+bookRouter.post("/", createBook);
 
 bookRouter.get("/:id", async (req, res) => {
   endpointCalled("/book/:id GET");
