@@ -1,23 +1,23 @@
 .link-component {
-    font-size: 1em;
-    color: var(--color-primary-purple);
-    cursor: pointer;
-    text-decoration: none;
-    transition: all .3s ease-in-out;
-  }
+  font-size: 1em;
+  color: var(--color-primary-purple);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .3s ease-in-out;
+}
   
-  .link-component:hover {
-    color: var(--color-ternary-purple);
-  }
-  
-  .link-component--active {
-    background-color: var(--color-primary-purple);
-    color: var(--color-secondary-white);
-    border-radius: .5rem;
-    padding: var(--box-padding);
-  }
-  
-  .link-component--active:hover {
-    background-color: var(--color-secondary-purple);
-    color: var(--color-secondary-white);
-  }
+.link-component:hover {
+  color: var(--color-ternary-purple);
+}
+
+.link-component--active {
+  background-color: var(--color-primary-purple);
+  color: var(--color-secondary-white);
+  border-radius: .5rem;
+  padding: var(--box-padding);
+}
+
+.link-component--active:hover {
+  background-color: var(--color-secondary-purple);
+  color: var(--color-secondary-white);
+}

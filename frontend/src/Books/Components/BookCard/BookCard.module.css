@@ -2,7 +2,6 @@
   width: 15rem;
   padding: var(--box-padding);
   color: var(--color-primary-dark);
-  /* background-color: #f5f5dc; */
   background-color: #F1F1F1;
 
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .1);

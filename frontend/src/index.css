@@ -44,6 +44,7 @@ main {
   color: var(--color-secondary-dark);
   background-color: #f4f2e9;
   padding: var(--page-padding);
+  scroll-behavior: smooth;
 }
 
 @media (prefers-color-scheme: light) {
