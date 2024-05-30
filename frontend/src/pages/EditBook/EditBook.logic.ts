@@ -57,24 +57,24 @@ export default function useEditBookLogic ( bookId : string ) {
     }
   };
 
-  useEffect(() => {
-    const fetchBook = async () => {
-      setLoading( true );
-      if ( bookId === '' ) return setMessage( 'Book ID is required' );
+  const fetchBook = async () => {
+    setLoading( true );
+    if ( bookId === '' ) return setMessage( 'Book ID is required' );
+    
+    const res = await getBook( bookId );
+
+    if ( res && res.data ) {
+      const bookToEdit = prepareBookData( res.data.book as Book );
       
-      const res = await getBook( bookId );
-
-      if ( res && res.data ) {
-        const bookToEdit = prepareBookData( res.data.book as Book );
-        
-        setBook( bookToEdit );
-      } else {
-        setMessage( 'Failed to get book' );
-      }
-
-      setLoading( false );
+      setBook( bookToEdit );
+    } else {
+      setMessage( 'Failed to get book' );
     }
 
+    setLoading( false );
+  }
+
+  useEffect(() => {
     fetchBook();
   }, [ bookId ]);
 

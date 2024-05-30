@@ -7,8 +7,11 @@
 }
 
 .books-page__title {
-  margin-bottom: 1rem;
   font-size: 2em;
   font-weight: bold;
   color: var(--color-secondary-dark);
+}
+
+.books-page__categories {
+  margin-bottom: 1rem;
 }

@@ -15,6 +15,13 @@
   grid-column: 2;
 }
 
+.view-book__header {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  align-items: first baseline;
+}
+
 .view-book__title {
   max-width: 100%;
   font-size: 1.25em;
@@ -25,9 +32,19 @@
   overflow: hidden;
 }
 
+.view-book__edition {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
 .view-book__author {
   font-size: 1em;
   font-weight: bold;
+}
+
+.view-book__isbn {
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 .view-book__id {
@@ -51,7 +68,7 @@
   grid-column: 1 / 3;
 }
 
-.view-book__description p {
+.view-book__description pre {
   font-size: 1rem;
 }
 

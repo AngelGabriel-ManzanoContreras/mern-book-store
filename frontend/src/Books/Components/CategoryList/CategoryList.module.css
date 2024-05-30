@@ -1,0 +1,5 @@
+.books-page__category-list {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}

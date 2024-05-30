@@ -1,0 +1,14 @@
+.main-button {
+  min-width: 10rem;
+  background-color: var(--color-primary-purple);
+  border: none;
+  color: var(--color-secondary-white);
+  padding: var(--box-padding);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.main-button:hover {
+  background-color: var(--color-secondary-purple);
+}

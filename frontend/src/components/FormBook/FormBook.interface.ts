@@ -4,4 +4,5 @@ export interface FormBookProps {
   initialBook?    : Book;
   required?       : boolean;
   onSubmit        : ( newBook: Book ) => void;
+  onCancel?       : () => void;
 }

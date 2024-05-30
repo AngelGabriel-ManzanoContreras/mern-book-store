@@ -5,5 +5,15 @@
   align-items: center;
   padding: var(--box-padding);
   background-color: cadetblue;
-  color: var(--color-primary-white)
+  color: var(--color-primary-white);
+}
+
+.Header__title {
+  font-size: 1.25em;
+  font-weight: bold;
+  color: var(--color-primary-white);
+}
+
+a {
+  text-decoration: none;
 }

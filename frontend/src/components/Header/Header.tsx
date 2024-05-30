@@ -4,10 +4,12 @@ import styles from './Header.module.css'
 
 export default function Header() {
   return (
-    <header className={ styles[`Header`] }>Book store
+    <header className={ styles[`Header`] }>
 
-      <Link to="/">Home</Link>
-      <Link to="/books">Books</Link>
+      <Link 
+        to="/" 
+        className={ styles[`Header__title`] }
+      >Book store</Link>
       
       <Link to="/book/add">create</Link>
     

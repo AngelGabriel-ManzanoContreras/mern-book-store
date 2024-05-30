@@ -1,16 +1,20 @@
-import { Link, useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import useViewBookLogic from './ViewBook.logic'
+import { formatDate, formatEdition } from '../../utils'
 
 import styles from './ViewBook.module.css'
 import Layout from '../../components/Layout/Layout'
-import { formatDate } from '../../utils'
+import MainButton from '../../components/MainButton/MainButton'
+import Status from '../../components/Status/Status'
 
 export default function ViewBook() {
   const { id = '' } = useParams()
+  const navigate = useNavigate()
   const { book, loading, message } = useViewBookLogic( id )
 
   const formatedDate = ( book.published_date ) ? formatDate( book.published_date ) : ''
+  const formatedEdition = formatEdition( book.edition )
   
   return (
     <Layout>
@@ -19,11 +23,15 @@ export default function ViewBook() {
           <article className={ styles[`view-book`] }>
 
             <section className={ styles[`view-book__presentation`] }>
-              <h2 className={ styles[`view-book__title`] }>{ book.title }</h2>
+              <section className={ styles[`view-book__header`] }>
+                <h2 className={ styles[`view-book__title`] }>{ book.title }</h2>
+                <h4 className={ styles[`view-book__edition`] }>{ formatedEdition }</h4>
+              </section>
+
               <h3 className={ styles[`view-book__author`] }>{ book.author }</h3>
 
+              <h4 className={ styles[`view-book__isbn`]}>ISBN: { book.isbn }</h4>
               <h4 className={ styles[`view-book__id`] }>Book ID: { id }</h4>
-
             </section>
 
             <figure className={ styles[`view-book__image`] }>
@@ -32,29 +40,34 @@ export default function ViewBook() {
 
             <section className={ styles[`view-book__details`] }>
               <h5>Details</h5>
+              <p>Edition: { formatedEdition }</p>
               <p>Publisher: { book.publisher }</p>
               <p>Genre: { book.category }</p>
-              <p>Year: { formatedDate }</p>
+              <p>Language: { book.language }</p>
+              <p>Published Date: { formatedDate }</p>
               <p>ISBN: { book.isbn }</p>
               <p>Pages: { book.pages }</p>
             </section>
 
             <section className={ styles[`view-book__description`] }>
               <h5>Description</h5>
-              <p>{ book.description }</p>
+              <pre>{ book.description }</pre>
             </section>
 
           </article>
         )
       }
-      {
-        loading && <p>Loading...</p>
-      }
-      {
-        message && <p>{ message }</p>
-      }
 
-      <Link to={`/book/edit/${ id }`}>Edit</Link>
+      <Status 
+        isLoading={ loading } 
+        errorMessage={ ( message && (!book) ) ? message : '' }
+      />
+
+      <MainButton 
+        text="Edit" 
+        onClick={ () => navigate( `/book/${id}/edit` ) } 
+      />
+
     </Layout>
   )
 }

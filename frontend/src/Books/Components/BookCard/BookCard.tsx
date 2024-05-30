@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-import { Book } from "../../utils/models/book"
+import { Book } from "../../../utils/models/book"
 
 import styles from './BookCard.module.css'
 
@@ -18,8 +18,10 @@ export default function BookCard( { book } : { book: Book} ) {
         
       </figure>
 
-      <h3 className={ styles[`book-card__title`] }>{ title }</h3>
-      <h4 className={ styles[`book-card__author`] }>{ author }</h4>
+      <section>
+        <h3 className={ styles[`book-card__title`] }>{ title }</h3>
+        <h4 className={ styles[`book-card__author`] }>{ author }</h4>
+      </section>
 
     </article>
   )
