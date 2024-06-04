@@ -1,0 +1,12 @@
+.menu-button {
+    height: 4rem;
+    width: 4rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.menu-button__icon {
+    height: 3rem;
+    width: 3rem;
+}

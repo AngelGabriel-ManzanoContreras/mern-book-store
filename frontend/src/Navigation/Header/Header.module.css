@@ -1,5 +1,6 @@
-.Header {
+.header {
   width: 100%;
+  height: 5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -8,7 +9,7 @@
   color: var(--color-primary-white);
 }
 
-.Header__title {
+.header__title {
   font-size: 1.25em;
   font-weight: bold;
   color: var(--color-primary-white);

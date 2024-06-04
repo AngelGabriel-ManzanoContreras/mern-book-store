@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 
 import { Book } from "../../../utils/models/book"
+import { bookLinks } from "../../../utils/app-links"
 
 import styles from './BookCard.module.css'
 
@@ -12,7 +13,7 @@ export default function BookCard( { book } : { book: Book} ) {
       
       <figure className={ styles[`book-card__image`] }>
 
-        <Link to={ `/book/${ book._id }` } className={ styles[`book-card__image-cta`] } >View book</Link>
+        <Link to={ bookLinks.viewBook.path( book._id ) } className={ styles[`book-card__image-cta`] } >View book</Link>
         
         <img src={ image } alt={ title } />
         

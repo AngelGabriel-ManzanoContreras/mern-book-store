@@ -1,7 +1,7 @@
 import { SERVER_URL, SERVER_PORT } from '../utils/config.ts';
 const SERVER = `${SERVER_URL}:${SERVER_PORT}`;
 
-export default async function fetchData( url: string, method: string, data: any = null ) {
+export default async function fetchData( url: string, method: string, data: never ) {
   try {
     const response = await fetch( `${ SERVER }${ url }`, {
       method,
