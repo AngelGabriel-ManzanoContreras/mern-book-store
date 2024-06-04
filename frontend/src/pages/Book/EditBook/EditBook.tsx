@@ -1,10 +1,10 @@
 import useEditBookLogic from './EditBook.logic.ts';
-import { Book } from '../../utils/models/book.ts';
+import { Book } from '../../../utils/models/book.ts';
 
-import FormBook from '../../components/FormBook/FormBook.tsx';
-import Layout from '../../components/Layout/Layout.tsx';
-import ModalAlert from '../../components/ModalAlert/ModalAlert.tsx';
-import MainButton from '../../components/MainButton/MainButton.tsx';
+import FormBook from '../../../components/Book/FormBook/FormBook.tsx';
+import Layout from '../../Layout/Layout.tsx';
+import ModalAlert from '../../../components/General/ModalAlert/ModalAlert.tsx';
+import MainButton from '../../../components/General/MainButton/MainButton.tsx';
 
 const UPDATE_BOOK_SUCCESS = 'Book updated successfully';
 const UPDATE_BOOK_ERROR = 'Error updating book';

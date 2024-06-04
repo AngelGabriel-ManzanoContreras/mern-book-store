@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-import { getBook } from "../../api/book.ts";
-import { Book } from "../../utils/models/book.ts";
+import { getBook } from "../../../api/book.ts";
+import { Book } from "../../../utils/models/book.ts";
 
 export default function useViewBookLogic( bookId : string ) {
   const [ book, setBook ] = useState( {} as Book );

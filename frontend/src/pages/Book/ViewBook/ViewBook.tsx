@@ -1,12 +1,12 @@
 import { useParams, useNavigate } from 'react-router-dom'
 
 import useViewBookLogic from './ViewBook.logic'
-import { formatDate, formatEdition } from '../../utils'
+import { formatDate, formatEdition } from '../../../utils'
 
 import styles from './ViewBook.module.css'
-import Layout from '../../components/Layout/Layout'
-import MainButton from '../../components/MainButton/MainButton'
-import Status from '../../components/Status/Status'
+import Layout from '../../Layout/Layout'
+import MainButton from '../../../components/General/MainButton/MainButton'
+import Status from '../../../components/General/Status/Status'
 
 export default function ViewBook() {
   const { id = '' } = useParams()

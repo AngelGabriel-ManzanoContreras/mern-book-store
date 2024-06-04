@@ -1,7 +1,7 @@
-import useFormData from '../../hooks/useFormData.ts';
-import { BookInput } from '../../utils/models/book.ts';
+import useFormData from '../../../hooks/useFormData.ts';
+import { BookInput } from '../../../utils/models/book.ts';
 
-import { serializeImage, isValidImage, isValidSize } from '../../utils/index.ts';
+import { serializeImage, isValidImage, isValidSize } from '../../../utils/index.ts';
 
 const DEFAULT_INCORRECT_IMAGE_SIZE = 'Invalid image size. Please select an image that is less than 5MB.';
 const DEFAULT_INCORRECT_IMAGE_TYPE = 'Invalid image type. Please select a JPEG or PNG image.';

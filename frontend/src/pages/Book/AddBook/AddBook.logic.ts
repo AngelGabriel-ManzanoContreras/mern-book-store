@@ -1,5 +1,5 @@
-import { saveBook } from '../../api/book.ts';
-import { Book } from '../../utils/models/book.ts';
+import { saveBook } from '../../../api/book.ts';
+import { Book } from '../../../utils/models/book.ts';
 
 const SuccessMessage = 'Book created successfully';
 const ErrorMessage = 'Error creating book';

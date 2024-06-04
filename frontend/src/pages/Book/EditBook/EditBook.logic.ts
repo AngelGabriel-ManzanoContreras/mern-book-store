@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import { getBook, updateBook } from '../../api/book.ts';
-import { Book, BookInput } from '../../utils/models/book.ts';
+import { getBook, updateBook } from '../../../api/book.ts';
+import { Book, BookInput } from '../../../utils/models/book.ts';
 
 const prepareBookData = ( book : Book ) => {
   const previousBook = { 

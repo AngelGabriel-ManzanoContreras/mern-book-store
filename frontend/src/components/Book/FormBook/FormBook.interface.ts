@@ -1,4 +1,4 @@
-import { Book } from "../../utils/models/book";
+import { Book } from "../../../utils/models/book";
 
 export interface FormBookProps {
   initialBook?    : Book;

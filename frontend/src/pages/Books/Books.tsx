@@ -1,10 +1,10 @@
 import useBooksLogic from './Books.logic.ts';
 
 import styles from './Books.module.css';
-import Layout from '../../components/Layout/Layout.tsx';
-import BookCard from '../Components/BookCard/BookCard.tsx';
-import Status from '../../components/Status/Status.tsx';
-import CategoryList from '../Components/CategoryList/CategoryList.tsx';
+import Layout from '../Layout/Layout.tsx';
+import BookCard from '../../components/Books/BookCard/BookCard.tsx';
+import Status from '../../components/General/Status/Status.tsx';
+import CategoryList from '../../components/Books/CategoryList/CategoryList.tsx';
 
 export default function BooksPage() {
   const { books, filteredBooks, categories, category, message, loading } = useBooksLogic();

@@ -1,9 +1,9 @@
 import useFormBookLogic from './FormBook.logic.ts';
 import { FormBookProps } from './FormBook.interface.ts';
-import { Book } from '../../utils/models/book.ts';
+import { Book } from '../../../utils/models/book.ts';
 
 import styles from './FormBook.module.css';
-import MainButton from '../MainButton/MainButton.tsx';
+import MainButton from '../../General/MainButton/MainButton.tsx';
 
 const placeholders = {
   title: 'Book Title',
