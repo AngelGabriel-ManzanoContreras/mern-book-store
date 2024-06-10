@@ -4,7 +4,7 @@ import { Book } from '../../../utils/models/book.ts';
 const SuccessMessage = 'Book created successfully';
 const ErrorMessage = 'Error creating book';
 
-export default function useCreateBookLogic () {
+export default function useAddBook () {
 
   const handleSubmit = async ( newBook : Book ) => {
     const res = await saveBook( newBook );

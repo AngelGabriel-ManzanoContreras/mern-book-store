@@ -6,7 +6,7 @@ import { serializeImage, isValidImage, isValidSize } from '../../../utils/index.
 const DEFAULT_INCORRECT_IMAGE_SIZE = 'Invalid image size. Please select an image that is less than 5MB.';
 const DEFAULT_INCORRECT_IMAGE_TYPE = 'Invalid image type. Please select a JPEG or PNG image.';
 
-export default function useFormBookLogic ( initialBook = BookInput ) {
+export default function useFormBook ( initialBook = BookInput ) {
   const [ newBook, setBookAttribute ] = useFormData( initialBook );
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

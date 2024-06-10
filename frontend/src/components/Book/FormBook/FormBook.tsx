@@ -1,4 +1,4 @@
-import useFormBookLogic from './FormBook.logic.ts';
+import useFormBook from './useFormBook.ts';
 import { FormBookProps } from './FormBook.interface.ts';
 import { Book } from '../../../utils/models/book.ts';
 
@@ -19,21 +19,21 @@ const placeholders = {
 };
 
 export default function FormBook({ initialBook, required = false, onSubmit, onCancel = ( () => {} ) } : FormBookProps) {
-  const { newBook, onInputChange, onFileChange } = useFormBookLogic( initialBook );
+  const { newBook, onInputChange, onFileChange } = useFormBook( initialBook );
 
   const { 
     title, 
     author, 
     published_date, 
-    pages, 
+    pages,
     language, 
     isbn, 
     publisher, 
-    edition, 
+    edition,
     category, 
     description,
     image
-  } = newBook as never;
+  } = newBook as Book;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,7 +106,7 @@ export default function FormBook({ initialBook, required = false, onSubmit, onCa
             type="number"
             name="edition"
             required
-            defaultValue={ edition }
+            value={ edition }
             onChange={ onInputChange }
           />
         </section>
@@ -178,7 +178,7 @@ export default function FormBook({ initialBook, required = false, onSubmit, onCa
             type="number"
             name="pages"
             required
-            defaultValue={ pages }
+            value={ pages }
             onChange={ onInputChange }
           />
         </section>

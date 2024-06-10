@@ -4,6 +4,21 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getBook, updateBook } from '../../../api/book.ts';
 import { Book, BookInput } from '../../../utils/models/book.ts';
 
+const UPDATE_BOOK_CONFIRM_TITLE = 'Update Book';
+const UPDATE_BOOK_CONFIRM = 'Are you sure you want to update this book?';
+
+const CANCEL_UPDATE_TITLE = 'Cancel Edit';
+const CANCEL_UPDATE_MESSAGE = 'Are you sure you want to cancel the edit?';
+
+const UPDATE_BOOK_SUCCESS_TITLE = 'Book updated';
+const UPDATE_BOOK_SUCCESS_MESSAGE = 'The book was updated successfully.';
+
+const UPDATE_BOOK_ERROR_TITLE = 'Error updating book';
+const UPDATE_BOOK_ERROR_MESSAGE = 'There was an error updating the book. Please try later.';
+
+const LOADING_TITLE = 'Updating Book';
+const LOADING_MESSAGE = 'Please wait...';
+
 const prepareBookData = ( book : Book ) => {
   const published_date = ( book[ 'published_date' ].includes('T') ) 
   ? book[ 'published_date' ].split('T')[0] : book[ 'published_date' ];
@@ -16,111 +31,135 @@ const prepareBookData = ( book : Book ) => {
 export default function useEditBook () {
   const { id = '' } = useParams();
   const navigate = useNavigate();
+
   const [ book, setBook ] = useState( BookInput );
   const [ loading, setLoading ] = useState( false );
   const [ message, setMessage ] = useState( '' );
-  const [ activeModal, setActiveModal ] = useState( false );
-  const [ informativeModal, setInformativeModal ] = useState( false );
-  const [ formBook, setFormBook ] = useState( {} );
-  const [ confirmModal, setConfirmModal ] = useState( false );
+  const [ bookToUpdate, setBookToUpdate ] = useState( {} );
+  const [ updateTrigger, setUpdateTrigger ] = useState( false );
 
-  const fetchBook = async () => {
-    setLoading( true );
-    if ( id === '' ) return setMessage( 'Book ID is required' );
-    
-    const res = await getBook( id );
-    
-    if ( res && res.data ) {
-      const bookToEdit = prepareBookData( res.data.book as Book );
-      
-      setBook( bookToEdit );
-    } else {
-      setMessage( 'Failed to get book' );
-    }
-    
-    setLoading( false );
-  }
+  const [ updateModal, setUpdateModal ] = useState({
+    active: false,
+    title: UPDATE_BOOK_CONFIRM_TITLE,
+    message: UPDATE_BOOK_CONFIRM,
+    onSubmit: () => handleUpdateBook( bookToUpdate ),
+    onCancel: () => setUpdateModal({ ...updateModal, active: false })
+  });
 
-  /*
-   * Function to send request to update book
-   */
-  const handleSubmit = async ( editedBook : object ) => {
-    const res = await updateBook( editedBook as Book );
+  const [ cancelModal, setCancelModal ] = useState({
+    active: false,
+    title: CANCEL_UPDATE_TITLE,
+    message: CANCEL_UPDATE_MESSAGE,
+    onSubmit: () => handleCancelModal(),
+    onCancel: () => setCancelModal({ ...cancelModal, active: false })
+  });
 
-    return ( res && res.data )
-  };
+  const [ informativeModal, setInformativeModal ] = useState({
+    active: false,
+    title: LOADING_TITLE,
+    message: LOADING_MESSAGE,
+    onSubmit: () => setInformativeModal({ ...informativeModal, active: false })
+  });
 
-  /*
-   * Function to handle form submission
-   */
-  const formSubmit = ( book : Book ) => {
-    setActiveModal( true );
-    setFormBook( book );
+  const formSubmit = ( editedBook : Book ) => {
+    /*
+     * Function to handle form submission */
+    setBookToUpdate( editedBook );
+    setUpdateTrigger( true );
   }
 
   const formCancel = () => {
-    setConfirmModal( true );
-  }
-
-  const handleConfirmModal = () => {
-    setConfirmModal( false );
-    navigate( '/' );
+    setCancelModal({ ...cancelModal, active: true });
   }
 
   const handleCancelModal = () => {
-    setConfirmModal( false );
+    setCancelModal({ ...cancelModal, active: false });
+    navigate( '/' );
   }
 
-  /*
-   * Function to handle modal submission
-   */
-  const handleModalSubmit = async () => {
-    const res = await handleSubmit( formBook );
-    if ( res ) {//TODO: correct logic
-      setActiveModal( false );
-      setInformativeModal( true );
+  const handleUpdateBook = async ( bookToUpdate : Book ) => {
+    /*
+     * Function to handle modal submission */
+    const res = await updateBook( bookToUpdate );
+
+    const closeModal = informativeModal.onSubmit;
+
+    if ( res && res.data ) {// Check if the book was updated
+
+      setInformativeModal({
+        active: true,
+        title: UPDATE_BOOK_SUCCESS_TITLE,
+        message: UPDATE_BOOK_SUCCESS_MESSAGE,
+        onSubmit: () => {
+          closeModal();
+          navigate( `/book/${ bookToUpdate._id }` );
+        }
+      });
     } else {
-      setActiveModal( false );
-      setInformativeModal( true );
+      setInformativeModal({
+        active: true,
+        title: UPDATE_BOOK_ERROR_TITLE,
+        message: UPDATE_BOOK_ERROR_MESSAGE,
+        onSubmit: () => {
+          closeModal();
+          navigate( `/` );
+        }
+      });
     }
   }
 
-  /*
-   * Function to handle modal cancel
-   */
-  const handleModalCancel = () => {
-    setActiveModal( false );
-  }
+  useEffect(() => {
+    /*
+     * Set the book to update and the modal to active
+     * are separate useEffect to avoid the handleUpdateBook
+     * to be called before the bookToUpdate is set correctly */
+    if ( Object.keys( bookToUpdate ).length === 0 ) return;
 
-  /*
-   * Function to handle informative modal
-   */
-  const handleInformativeModal = () => {
-    setInformativeModal( false );
-    navigate( `/book/${ id }` );
-  }
+    setUpdateModal({ 
+      ...updateModal, 
+      active: true, 
+      onSubmit: () => handleUpdateBook( bookToUpdate as Book ) 
+    });
+
+    setUpdateTrigger( false );// Reset the trigger
+
+  }, [ bookToUpdate, updateTrigger ]);
 
   useEffect(() => {
+    /*
+     * Scroll to top when component mounts */
     window.scrollTo(0, 0);
   }, []);
   
   useEffect(() => {
-    fetchBook();
+    /*
+     * Fetch book data when there's an id */
+    ( async () => {
+      setLoading( true );
+      if ( id === '' ) return setMessage( 'Book ID is required' );
+      
+      const res = await getBook( id );
+      
+      if ( res && res.data ) {
+        const bookToEdit = prepareBookData( res.data.book as Book );
+        
+        setBook( bookToEdit );
+      } else {
+        setMessage( 'Failed to get book' );
+      }
+      
+      setLoading( false );
+    })()
   }, [ id ]);
 
   return {
     book,
     loading,
     message,
-    activeModal,
+    updateModal,
+    cancelModal,
     informativeModal,
-    confirmModal,
     formSubmit,
-    formCancel,
-    handleModalSubmit,
-    handleModalCancel,
-    handleInformativeModal,
-    handleConfirmModal,
-    handleCancelModal,
+    formCancel
   };
 }

@@ -7,19 +7,21 @@ export default function useFormData( initialFormData : object ) {
     setFormData( initialFormData );
   }, [ initialFormData ]);
 
-  const handleInputChange = (name: string, values: never) => {
-    if ( values === undefined ) return;
+  const handleInputChange = (name: string, values: object | any) => {
+    if (values === undefined) return;
 
-    if (typeof values[0] === 'object') {
+    if (typeof values === 'object') {
       setFormData({
-      ...formData,
-      [ name ]: {
-        ...formData[ name ],
-        ...values,
-      },
+        ...formData,
+        [name]: {
+          ...formData[name],
+          ...values,
+        },
       });
     } else {
       setFormData({
+        ...formData,
+        [name]: values,
       ...formData,
       [name]: values,
       });

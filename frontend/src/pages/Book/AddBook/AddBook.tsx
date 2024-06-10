@@ -1,10 +1,10 @@
-import useCreateBookLogic from './AddBook.logic.ts';
+import useAddBook from './useAddBook.ts';
 
 import FormBook from '../../../components/Book/FormBook/FormBook.tsx';
 import Layout from '../../Layout/Layout.tsx';
 
 export default function AddBookPage() {
-  const { handleSubmit } = useCreateBookLogic();
+  const { handleSubmit } = useAddBook();
 
   return (
     <Layout>

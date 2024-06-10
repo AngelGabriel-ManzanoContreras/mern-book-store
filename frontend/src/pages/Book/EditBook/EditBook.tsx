@@ -6,26 +6,17 @@ import Layout from '../../Layout/Layout.tsx';
 import ModalAlert from '../../../components/General/ModalAlert/ModalAlert.tsx';
 import MainButton from '../../../components/General/MainButton/MainButton.tsx';
 
-const UPDATE_BOOK_SUCCESS = 'Book updated successfully';
-const UPDATE_BOOK_ERROR = 'Error updating book';
 const FETCH_BOOK_ERROR = 'Book not found';
-const UPDATE_BOOK_CONFIRM = 'Are you sure you want to update this book?';
-const UPDATE_BOOK_CONFIRM_TITLE = 'Update Book';
 
 export default function EditBookPage() {
   const { 
     book, 
-    loading, 
-    activeModal, 
+    loading,
+    updateModal,
+    cancelModal,
     informativeModal, 
-    confirmModal,
     formSubmit, 
-    formCancel,
-    handleInformativeModal, 
-    handleModalSubmit,
-    handleModalCancel,
-    handleCancelModal,
-    handleConfirmModal
+    formCancel
   } = useEditBook();
 
   if ( Object.keys( book ).length === 0 && !loading ) return (
@@ -54,47 +45,50 @@ export default function EditBookPage() {
           initialBook={ book } 
         />
 
-        <ModalAlert
-          active={ confirmModal }
-          title='Cancel Edit'
-          message='Are you sure you want to cancel the edit?'
-        >
-          <MainButton
-            text='Yes'
-            onClick={ handleConfirmModal }
-          />
-
-          <MainButton
-            text='No'
-            onClick={ handleCancelModal }
-          /> 
-        </ModalAlert>
-
+        {/* Modal to confirm the update of the book */}
         <ModalAlert 
-          active={ activeModal }
-          title={ UPDATE_BOOK_CONFIRM_TITLE }
-          message={ UPDATE_BOOK_CONFIRM }
+          active={ updateModal.active }
+          title={ updateModal.title }
+          message={ updateModal.message }
         >
           <MainButton
             type='submit'
             text='Update Book'
-            onClick={ handleModalSubmit }
+            onClick={ updateModal.onSubmit }
           />
 
           <MainButton
-            text='Cancel'
-            onClick={ handleModalCancel }
+            text='Continue editing'
+            onClick={ updateModal.onCancel }
           />
         </ModalAlert>
 
+        {/* Modal to confirm the cancel of the edit */}
         <ModalAlert
-          active={ informativeModal }
-          title={ informativeModal ? UPDATE_BOOK_SUCCESS : UPDATE_BOOK_ERROR }
-          message={ informativeModal ? UPDATE_BOOK_SUCCESS : UPDATE_BOOK_ERROR }
+          active={ cancelModal.active }
+          title={ cancelModal.title }
+          message={ cancelModal.message }
+        >
+          <MainButton
+            text='Yes'
+            onClick={ cancelModal.onSubmit }
+          />
+
+          <MainButton
+            text='No'
+            onClick={ cancelModal.onCancel }
+          /> 
+        </ModalAlert>
+
+        {/* Modal to inform the user about the result of the update */}
+        <ModalAlert
+          active={ informativeModal.active }
+          title={ informativeModal.title }
+          message={ informativeModal.message }
         >
           <MainButton
             text='Ok'
-            onClick={ handleInformativeModal }
+            onClick={ informativeModal.onSubmit }
           />
         </ModalAlert>
 
