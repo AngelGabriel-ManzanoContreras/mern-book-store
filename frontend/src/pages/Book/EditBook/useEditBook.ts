@@ -35,7 +35,7 @@ const prepareBookData = ( book : Book ) => {
   return bookToEdit;
 }
 
-export default function useEditBookLogic () {
+export default function useEditBook () {
   const { id = '' } = useParams();
   const navigate = useNavigate();
   const [ book, setBook ] = useState( BookInput );
@@ -127,6 +127,10 @@ export default function useEditBookLogic () {
     setInformativeModal( false );
     navigate( `/book/${ id }` );
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   
   useEffect(() => {
     fetchBook();

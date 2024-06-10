@@ -1,17 +1,24 @@
-import { useParams, useNavigate } from 'react-router-dom'
-
-import useViewBookLogic from './ViewBook.logic'
+import useViewBook from './useViewBook'
 import { formatDate, formatEdition } from '../../../utils'
 
 import styles from './ViewBook.module.css'
 import Layout from '../../Layout/Layout'
 import MainButton from '../../../components/General/MainButton/MainButton'
 import Status from '../../../components/General/Status/Status'
+import ModalAlert from '../../../components/General/ModalAlert/ModalAlert'
 
 export default function ViewBook() {
-  const { id = '' } = useParams()
-  const navigate = useNavigate()
-  const { book, loading, message } = useViewBookLogic( id )
+  const { 
+    book, 
+    loading, 
+    message, 
+    activeModal, 
+    goToEditBook, 
+    triggerModalDeleteBook,
+    deleteBook,
+    cancelDeleteBook
+  } = useViewBook()
+  const auth = true//TODO implement auth provider
 
   const formatedDate = ( book.published_date ) ? formatDate( book.published_date ) : ''
   const formatedEdition = formatEdition( book.edition )
@@ -31,7 +38,7 @@ export default function ViewBook() {
               <h3 className={ styles[`view-book__author`] }>{ book.author }</h3>
 
               <h4 className={ styles[`view-book__isbn`]}>ISBN: { book.isbn }</h4>
-              <h4 className={ styles[`view-book__id`] }>Book ID: { id }</h4>
+              <h4 className={ styles[`view-book__id`] }>Book ID: { book._id }</h4>
             </section>
 
             <figure className={ styles[`view-book__image`] }>
@@ -63,10 +70,29 @@ export default function ViewBook() {
         errorMessage={ ( message && (!book) ) ? message : '' }
       />
 
-      <MainButton 
-        text="Edit" 
-        onClick={ () => navigate( `/book/${id}/edit` ) } 
-      />
+      {
+        auth && (
+          <section className={ styles[`view-book__actions`] }>
+            <MainButton 
+              text="Edit" 
+              onClick={ goToEditBook } 
+            />
+            <MainButton 
+              text="Delete" 
+              onClick={ triggerModalDeleteBook } 
+            />
+          </section>
+        )
+      }
+
+      <ModalAlert 
+        active={ activeModal } 
+        title="Delete Book" 
+        message="Are you sure you want to delete this book?"
+      >
+        <MainButton text="Yes" onClick={ deleteBook } />
+        <MainButton text="No" onClick={ cancelDeleteBook } />
+      </ModalAlert>
 
     </Layout>
   )

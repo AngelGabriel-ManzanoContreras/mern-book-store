@@ -32,18 +32,19 @@
 }
 
 html, body {
-  height: 100dvh;
+  height: 100%;
   width: 100%;
   font-size: 1.6rem;
   font-weight: 400;
   line-height: 1.5;
   box-sizing: border-box;
+  background-color: #f4f2e9;
 }
 
 main {
   color: var(--color-secondary-dark);
-  background-color: #f4f2e9;
   padding: var(--page-padding);
+  background-color: #f4f2e9;
   scroll-behavior: smooth;
 }
 

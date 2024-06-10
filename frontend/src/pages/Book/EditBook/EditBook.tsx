@@ -1,4 +1,4 @@
-import useEditBookLogic from './EditBook.logic.ts';
+import useEditBook from './useEditBook.ts';
 import { Book } from '../../../utils/models/book.ts';
 
 import FormBook from '../../../components/Book/FormBook/FormBook.tsx';
@@ -26,7 +26,7 @@ export default function EditBookPage() {
     handleModalCancel,
     handleCancelModal,
     handleConfirmModal
-  } = useEditBookLogic();
+  } = useEditBook();
 
   if ( Object.keys( book ).length === 0 && !loading ) return (
     <Layout>

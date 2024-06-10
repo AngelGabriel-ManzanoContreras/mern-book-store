@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-import { authLinks, bookLinks } from "../../utils/app-links"
+import { authLinks, bookLinks } from "../../../utils/app-links.ts"
 
 const unathorizedLinks = [
   authLinks.signIn,

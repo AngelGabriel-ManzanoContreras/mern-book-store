@@ -1,4 +1,4 @@
-import icon from '../../assets/icons/hamburger-menu.svg'
+import icon from '../../../assets/icons/hamburger-menu.svg'
 
 import styles from './MenuButton.module.css'
 
