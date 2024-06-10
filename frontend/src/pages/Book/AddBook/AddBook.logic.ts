@@ -6,13 +6,8 @@ const ErrorMessage = 'Error creating book';
 
 export default function useCreateBookLogic () {
 
-  const handleSubmit = async ( newBook : object ) => {
-    const formatedBookData = Object.keys( newBook ).reduce( ( acc : any, key : string ) => {
-      acc[ key ] = newBook[ key ].value;
-      return acc;
-    }, {} );
-    
-    const res = await saveBook( formatedBookData as Book );
+  const handleSubmit = async ( newBook : Book ) => {
+    const res = await saveBook( newBook );
 
     if ( res && res.data ) {
       alert( SuccessMessage );

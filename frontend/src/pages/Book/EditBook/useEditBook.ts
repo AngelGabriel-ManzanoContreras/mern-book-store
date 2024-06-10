@@ -5,32 +5,10 @@ import { getBook, updateBook } from '../../../api/book.ts';
 import { Book, BookInput } from '../../../utils/models/book.ts';
 
 const prepareBookData = ( book : Book ) => {
-  const previousBook = { 
-    _id : book._id,
-    title: book.title, 
-    author: book.author, 
-    published_date: book.published_date, 
-    pages: book.pages, 
-    language: book.language, 
-    isbn: book.isbn, 
-    publisher: book.publisher, 
-    edition: book.edition, 
-    category: book.category, 
-    description: book.description,
-    image: book.image 
-  }
-  const bookToEdit = Object.keys( previousBook ).reduce( ( acc : any, key : string ) => {
-    acc[ key ] = {
-      name: key,
-      value: book[ key ],
-    };
+  const published_date = ( book[ 'published_date' ].includes('T') ) 
+  ? book[ 'published_date' ].split('T')[0] : book[ 'published_date' ];
 
-    if ( key === 'published_date' && book[ key ] ) {
-      acc[ key ].value = book[ key ].split('T')[0];
-    }
-
-    return acc;
-  }, {} );
+  const bookToEdit = { ...book, published_date };
 
   return bookToEdit;
 }
@@ -67,21 +45,15 @@ export default function useEditBook () {
    * Function to send request to update book
    */
   const handleSubmit = async ( editedBook : object ) => {
-    const formatedBookData = Object.keys( editedBook ).reduce( ( acc : any, key : string ) => {
-      acc[ key ] = editedBook[ key ].value;
-      return acc;
-    }, {} );
-    
-    const res = await updateBook( formatedBookData as Book );
+    const res = await updateBook( editedBook as Book );
 
-    // Check if the book was updated successfully
     return ( res && res.data )
   };
 
   /*
    * Function to handle form submission
    */
-  const formSubmit = ( book ) => {
+  const formSubmit = ( book : Book ) => {
     setActiveModal( true );
     setFormBook( book );
   }
@@ -104,7 +76,7 @@ export default function useEditBook () {
    */
   const handleModalSubmit = async () => {
     const res = await handleSubmit( formBook );
-    if ( res ) {
+    if ( res ) {//TODO: correct logic
       setActiveModal( false );
       setInformativeModal( true );
     } else {

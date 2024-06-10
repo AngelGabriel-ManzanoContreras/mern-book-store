@@ -7,18 +7,23 @@ export default function useFormData( initialFormData : object ) {
     setFormData( initialFormData );
   }, [ initialFormData ]);
 
-  const handleInputChange = (name: string, value: never, ...rest: never) => {
-    //rest is an array, but we only need the first element which must be an object
-    //rest is optional
-    setFormData({
+  const handleInputChange = (name: string, values: never) => {
+    if ( values === undefined ) return;
+
+    if (typeof values[0] === 'object') {
+      setFormData({
       ...formData,
-      [name]: {
+      [ name ]: {
         ...formData[ name ],
-        name,
-        value,// This is the idea, overwriting the value of the object with the new value
-        ...rest[0],
+        ...values,
       },
-    });
+      });
+    } else {
+      setFormData({
+      ...formData,
+      [name]: values,
+      });
+    }
   };
 
   return [ formData, handleInputChange ];

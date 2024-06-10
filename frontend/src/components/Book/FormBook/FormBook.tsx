@@ -51,7 +51,7 @@ export default function FormBook({ initialBook, required = false, onSubmit, onCa
           name="title"
           required
           placeholder={ placeholders.title }
-          defaultValue={ title.value }
+          defaultValue={ title }
           onChange={ onInputChange }
 
           className={ styles[`form-book__title`] } 
@@ -61,7 +61,7 @@ export default function FormBook({ initialBook, required = false, onSubmit, onCa
           name="author"
           required
           placeholder={ placeholders.author }
-          defaultValue={ author.value }
+          defaultValue={ author }
           onChange={ onInputChange }
 
           className={ styles[`form-book__author`] } 
@@ -94,7 +94,7 @@ export default function FormBook({ initialBook, required = false, onSubmit, onCa
           className={ styles[`form-book__image-input`] }
         />
 
-        <img src={ image.value || placeholders.image } alt={ title.value } />
+        <img src={ image || placeholders.image } alt={ title } />
       </figure>
 
       <section className={ styles[`form-book__details`] }>
@@ -106,7 +106,7 @@ export default function FormBook({ initialBook, required = false, onSubmit, onCa
             type="number"
             name="edition"
             required
-            defaultValue={ edition.value }
+            defaultValue={ edition }
             onChange={ onInputChange }
           />
         </section>
@@ -118,7 +118,7 @@ export default function FormBook({ initialBook, required = false, onSubmit, onCa
             name="publisher"
             required
             placeholder={ placeholders.publisher }
-            defaultValue={ publisher.value }
+            defaultValue={ publisher }
             onChange={ onInputChange }
           />
           
@@ -131,7 +131,7 @@ export default function FormBook({ initialBook, required = false, onSubmit, onCa
             name="category"
             required
             placeholder={ placeholders.category }
-            defaultValue={ category.value }
+            defaultValue={ category }
             onChange={ onInputChange }
           />
         </section>
@@ -143,7 +143,7 @@ export default function FormBook({ initialBook, required = false, onSubmit, onCa
             name="language"
             required
             placeholder={ placeholders.language }
-            defaultValue={ language.value }
+            defaultValue={ language }
             onChange={ onInputChange }
           />
         </section>
@@ -155,7 +155,7 @@ export default function FormBook({ initialBook, required = false, onSubmit, onCa
             name="published_date"
             required
             placeholder={ placeholders.published_date }
-            defaultValue={ published_date.value }
+            defaultValue={ published_date }
             onChange={ onInputChange }
           />
         </section>
@@ -167,7 +167,7 @@ export default function FormBook({ initialBook, required = false, onSubmit, onCa
             name="isbn"
             required
             placeholder={ placeholders.isbn }
-            defaultValue={ isbn.value }
+            defaultValue={ isbn }
             onChange={ onInputChange }
           />
         </section>
@@ -178,7 +178,7 @@ export default function FormBook({ initialBook, required = false, onSubmit, onCa
             type="number"
             name="pages"
             required
-            defaultValue={ pages.value }
+            defaultValue={ pages }
             onChange={ onInputChange }
           />
         </section>
@@ -190,7 +190,7 @@ export default function FormBook({ initialBook, required = false, onSubmit, onCa
           name="description"
           required
           placeholder={ placeholders.description }
-          defaultValue={ description.value }
+          defaultValue={ description }
           onChange={ onInputChange }
         ></textarea>
       </section>
